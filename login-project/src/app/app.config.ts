@@ -1,10 +1,24 @@
-import { ApplicationConfig, importProvidersFrom, provideZoneChangeDetection } from '@angular/core';
-import { provideRouter } from '@angular/router';
-import { OKTA_CONFIG, OktaAuthModule } from '@okta/okta-angular';
-import { oktaAuth } from './okta.config';
+import { ApplicationConfig, importProvidersFrom } from '@angular/core';
+import { provideRouter, Router } from '@angular/router';
+import { OktaAuthModule, OKTA_CONFIG } from '@okta/okta-angular';
 
 import { routes } from './app.routes';
+import { oktaAuth } from './okta.config';
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes), importProvidersFrom(OktaAuthModule.forRoot({ oktaAuth })),]
+  providers: [
+    provideRouter(routes),
+    importProvidersFrom(OktaAuthModule.forRoot({ oktaAuth })),
+    {
+      provide: OKTA_CONFIG,
+      useFactory: (router: Router) => ({
+        oktaAuth,
+        onAuthRequired: () => router.navigate(['/login']),
+        restoreOriginalUri: (_oktaAuth: any, originalUri: string) => {
+          router.navigateByUrl(originalUri || '/home');
+        },
+      }),
+      deps: [Router],
+    },
+  ],
 };
