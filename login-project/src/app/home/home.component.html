@@ -1,1 +1,10 @@
-<p>home works!</p>
+
+@if(user | async; as user){
+<div class="home-container" >
+  <div class="home-card">
+    <h1>Welcome, {{ user.name }}</h1>
+    <p>Email: {{ user.email }}</p>
+    <button class="logout-btn" (click)="logout()">Sign out</button>
+  </div>
+</div>
+}

@@ -1,24 +1,19 @@
-import { ApplicationConfig, importProvidersFrom } from '@angular/core';
-import { provideRouter, Router } from '@angular/router';
-import { OktaAuthModule, OKTA_CONFIG } from '@okta/okta-angular';
+import { ApplicationConfig } from '@angular/core';
+import { provideRouter } from '@angular/router';
+import { provideAuth0 } from '@auth0/auth0-angular';
 
 import { routes } from './app.routes';
-import { oktaAuth } from './okta.config';
+import { environment } from '../environments/environment';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
-    importProvidersFrom(OktaAuthModule.forRoot({ oktaAuth })),
-    {
-      provide: OKTA_CONFIG,
-      useFactory: (router: Router) => ({
-        oktaAuth,
-        onAuthRequired: () => router.navigate(['/login']),
-        restoreOriginalUri: (_oktaAuth: any, originalUri: string) => {
-          router.navigateByUrl(originalUri || '/home');
-        },
-      }),
-      deps: [Router],
-    },
+    provideAuth0({
+      domain: environment.auth0.domain,
+      clientId: environment.auth0.clientId,
+      authorizationParams: {
+        redirect_uri: environment.auth0.redirectUri,
+      },
+    }),
   ],
 };

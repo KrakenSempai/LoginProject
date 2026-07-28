@@ -1,10 +1,8 @@
 export const environment = {
   production: true,
-  okta: {
-    issuer: 'https://{yourOktaDomain}/oauth2/default',
-    clientId: '{yourClientId}',
-    redirectUri: 'https://your-production-domain.com/login/callback',
-    postLogoutRedirectUri: 'https://your-production-domain.com',
-    scopes: ['openid', 'profile', 'email'],
+  auth0: {
+    domain: 'dev-kpclh7a857ybmsna.us.auth0.com',
+    clientId: 'h2V7oriWFM8ThET2j3g9hQzdeuZJzlTs',
+    redirectUri: 'http://localhost:4200',
   },
 };

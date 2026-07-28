@@ -18,8 +18,7 @@
     "@angular/platform-browser": "^18.2.0",
     "@angular/platform-browser-dynamic": "^18.2.0",
     "@angular/router": "^18.2.0",
-    "@okta/okta-angular": "^7.1.0",
-    "@okta/okta-auth-js": "^8.0.1",
+    "@auth0/auth0-angular": "^2.10.1",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.10"
